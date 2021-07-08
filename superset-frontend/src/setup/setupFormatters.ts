@@ -26,6 +26,10 @@ import {
   smartDateVerboseFormatter,
 } from '@superset-ui/core';
 
+import {
+  createD3NumberFormatter
+} from '@superset-ui/number-format';
+
 export default function setupFormatters() {
   getNumberFormatterRegistry()
     // Add shims for format strings that are deprecated or common typos.
@@ -63,6 +67,16 @@ export default function setupFormatters() {
     .registerValue('$,0f', getNumberFormatter('$,.4f'))
     .registerValue('$,.f', getNumberFormatter('$,.4f'))
     .registerValue('DURATION', createDurationFormatter())
+    .registerValue('CURRENCY_INDIA',createD3NumberFormatter({
+        locale: {
+          decimal: '.',
+          thousands: ',',
+          grouping: [3, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+          currency: ['₹', ''],
+        },
+        formatString: '$,.2f',
+      }),
+    )
     .registerValue(
       'DURATION_SUB',
       createDurationFormatter({ formatSubMilliseconds: true }),
